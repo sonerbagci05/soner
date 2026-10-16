@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hızlı Ödeme & IBAN Bilgileri</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: #0f172a; color: #f8fafc; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .container { width: 100%; max-width: 400px; background: #1e293b; border-radius: 24px; padding: 28px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); text-align: center; border: 1px solid #334155; }
+        .logo { width: 72px; height: 72px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 50%; margin: 0 auto 14px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: bold; color: white; box-shadow: 0 8px 16px rgba(59,130,246,0.3); }
+        h1 { font-size: 20px; font-weight: 700; margin-bottom: 6px; color: #ffffff; }
+        p.subtitle { font-size: 13px; color: #94a3b8; margin-bottom: 24px; }
+        .bank-card { background: #0f172a; border-radius: 16px; padding: 18px; margin-bottom: 16px; text-align: left; border: 1px solid #334155; }
+        .bank-name { font-size: 14px; font-weight: 700; color: #38bdf8; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+        .label { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .value-box { display: flex; justify-content: space-between; align-items: center; background: #1e293b; padding: 12px; border-radius: 10px; margin-bottom: 12px; border: 1px solid #334155; }
+        .value-text { font-size: 14px; font-weight: 600; color: #f1f5f9; word-break: break-all; margin-right: 10px; }
+        .copy-btn { background: #3b82f6; color: white; border: none; padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: 0.2s; }
+        .copy-btn:active { transform: scale(0.95); background: #2563eb; }
+        .toast { visibility: hidden; min-width: 220px; background-color: #10b981; color: #fff; text-align: center; border-radius: 12px; padding: 12px; position: fixed; z-index: 1; bottom: 30px; font-size: 14px; font-weight: 600; box-shadow: 0 10px 20px rgba(16,185,129,0.3); }
+        .toast.show { visibility: visible; animation: fadein 0.3s, fadeout 0.3s 2s; }
+        @keyframes fadein { from {bottom: 10px; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 10px; opacity: 0;} }
+        .footer { font-size: 11px; color: #475569; margin-top: 16px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="logo">₺</div>
+    <h1>Soner Kart</h1>
+    <p class="subtitle">Ödeme için aşağıdaki bilgileri tek tıkla kopyalayabilirsiniz.</p>
+
+    <!-- BANKA KARTI -->
+    <div class="bank-card">
+        <div class="bank-name">
+            <span>🏦 ZİRAAT BANKASI</span>
+            <span style="font-size:11px; color:#94a3b8;">TL Hesabı</span>
+        </div>
+
+        <div class="label">Alıcı Adı Soyadı</div>
+        <div class="value-box">
+            <span class="value-text" id="isim1">SONER BAĞCI</span>
+            <button class="copy-btn" onclick="kopyala('isim1', 'Alıcı Adı')">Kopyala</button>
+        </div>
+
+        <div class="label">IBAN Numarası</div>
+        <div class="value-box" style="margin-bottom: 0;">
+            <span class="value-text" id="iban1"> TR390006400000110292518618</span>
+            <button class="copy-btn" onclick="kopyala('iban1', 'IBAN')">Kopyala</button>
+        </div>
+    </div>
+    
+    <div class="footer">🔒 Bu sayfa NFC güvenlik protokolü ile korunmaktadır.</div>
+</div>
+
+<div id="toast" class="toast">✅ Bilgi Kopyalandı!</div>
+
+<script>
+function kopyala(elementId, tur) {
+    var metin = document.getElementById(elementId).innerText;
+    navigator.clipboard.writeText(metin).then(function() {
+        var toast = document.getElementById("toast");
+        toast.innerText = "✅ " + tur + " Kopyalandı!";
+        toast.className = "toast show";
+        setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 2200);
+    });
+}
+</script>
+
+</body>
+</html>
